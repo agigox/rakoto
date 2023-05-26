@@ -1,0 +1,34 @@
+@use '../fonts/fonts.scss';
+//
+// Variables
+// --------------------------------------------------
+// Default variable overrides
+$body-bg: #fff;
+$body-color: #000;
+$link-color: rgba(0, 169, 227, 1);
+// colors
+$blue-fire-rak: #00A9E3;
+$white-rak: #FFFFFF;
+$christmas-silver-rak: #E0E0E0;
+$black-rak: #000000;
+$black-wash: #0D0D0D;
+$cerebral-grey-rak: #CCCCCC;
+$lead-rak: #212121;
+$winters-day: #dff5ff;
+$vanadyl-blue: #09A0E1;
+// fonts
+$font-family-open: 'Open Sans', sans-serif !default;
+$font-family-inter: 'Inter', sans-serif !default;
+// Default variable overrides
+$body-bg: #fff;
+$body-color: $black-rak;
+
+
+// buttons
+$btn-border-width: 0;
+$bg-search: rgba(242, 242, 242, 1);
+$bg-search-hover: rgba(242, 242, 242, 0.9);
+$btn-carte: rgba(47, 128, 237, 1);
+$color-search: #11161a;
+
+$font-size-base: 13px !default;

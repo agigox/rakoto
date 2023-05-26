@@ -1,0 +1,41 @@
+@import '~leaflet/dist/leaflet.css';
+@import '~bootstrap/scss/bootstrap';
+@import './sass/variables';
+
+@import './sass/mixins';
+@import './sass/root';
+@import './sass/buttons';
+@import './sass/forms';
+@import './sass/containers';
+@import './sass/grid';
+@import './sass/utilities';
+@import './sass/common';
+
+body {
+  margin: 0;
+  font-family: $font-family-inter;
+  color: $body-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-weight: 400;
+  min-width: 320px;
+  .svg-icon-marker {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      position: relative;
+      width: 37px;
+      .number-strategy-line {
+        position: relative;
+        left: 18px;
+        z-index: 999;
+        top: -9px;
+        margin: 0 auto;
+        color: $link-color;
+        font-weight: 600;
+    }
+  }
+}
+
+
