@@ -96,6 +96,14 @@
   align-items: center;
   justify-content: center;
 
+  &.selected-mobile {
+    bottom: 14.2rem !important;
+
+    &.selected-strategy {
+      bottom: 17.5rem !important;
+    }
+  }
+
   &.btn-list {
     bottom: 2rem;
   }

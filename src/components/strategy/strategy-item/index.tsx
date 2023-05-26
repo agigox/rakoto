@@ -6,7 +6,7 @@ import StrategyContent from './strategy-content';
 
 interface StrategyItemProps {
   strategy: IStrategy;
-  isLast: boolean;
+  isLast?: boolean;
 }
 interface CSSRowProps {
   last: boolean;

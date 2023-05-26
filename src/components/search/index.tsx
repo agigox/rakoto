@@ -151,7 +151,6 @@ const Search: React.FC = () => {
 
     void postStrategies(filtersContext).then((response: any) => {
       void getStrategies().then((res) => {
-        console.log(res);
         setStrategyContext({
           ...strategyContext,
           data: res.data,

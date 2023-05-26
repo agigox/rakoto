@@ -25,6 +25,8 @@ function GlobalContextProvider({
       selectedStrategies: [],
       openStrategy: false,
       openMap: false,
+      selectedStrategy: undefined,
+      openStrategyDetails: false,
     });
 
   return (

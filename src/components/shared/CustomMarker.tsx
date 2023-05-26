@@ -1,6 +1,7 @@
 import { type LeafletEventHandlerFnMap } from 'leaflet';
 import React, { useEffect } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
+import { useDeviceType } from './useDeviceType';
 
 interface CustomMarkerProps {
   children: React.ReactNode;
@@ -21,6 +22,9 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   useEffect(() => {
     map.setView([lat, lng]);
   }, [lat, lng]);
+
+  const { isDesktop } = useDeviceType();
+
   return (
     <Marker
       position={[lat, lng]}
@@ -28,7 +32,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
       draggable={true}
       eventHandlers={eventHandlers}
     >
-      <Popup>{children}</Popup>
+      {isDesktop && <Popup>{children}</Popup>}
     </Marker>
   );
 };

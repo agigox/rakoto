@@ -6,4 +6,6 @@ export interface IStrategyContext {
   selectedStrategies: number[];
   openStrategy?: boolean;
   openMap?: boolean;
+  selectedStrategy?: number;
+  openStrategyDetails?: boolean;
 }

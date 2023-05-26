@@ -10,6 +10,7 @@ import { Icon } from './shared/Icon';
 import StrategyContext from 'context/StrategyContext';
 import { useDeviceType } from './shared/useDeviceType';
 import List_bulleted from '../images/list_bulleted.svg';
+import { StrategyDetails } from './strategy/StrategyDetails';
 
 const AppLayout: React.FC = () => {
   const { filtersContext, setFiltersContext } =
@@ -17,6 +18,13 @@ const AppLayout: React.FC = () => {
 
   const { strategyContext, setStrategyContext } =
     useContext<StrategyContextType>(StrategyContext);
+  const {
+    openStrategy,
+    openMap,
+    openStrategyDetails,
+    selectedStrategies,
+    selectedStrategy,
+  } = strategyContext;
 
   const { isMobile, isTablet } = useDeviceType();
   const isDesktop = !isMobile && !isTablet;
@@ -30,30 +38,41 @@ const AppLayout: React.FC = () => {
         openStrategy: true,
       });
     }
-  }, []);
+  }, [strategyContext.openMap, strategyContext.openStrategy]);
 
-  const openSearch = (): void => {
+  const handleOpenSearch = (): void => {
     setFiltersContext({
       ...filtersContext,
       openSearch: true,
     });
   };
 
-  const openMap = (): void => {
+  const handleOpenMap = (): void => {
     setStrategyContext({
       ...strategyContext,
       openMap: true,
       openStrategy: false,
+      openStrategyDetails: false,
     });
   };
 
-  const openStrategy = (): void => {
+  const handleOpenStrategy = (): void => {
     setStrategyContext({
       ...strategyContext,
       openMap: true,
       openStrategy: true,
+      openStrategyDetails: false,
     });
   };
+
+  const isSelectedMobile =
+    openStrategyDetails === true && selectedStrategy !== null
+      ? 'selected-mobile'
+      : '';
+  const isSelectedStrategy =
+    openStrategyDetails === true && selectedStrategies.length > 0
+      ? 'selected-strategy'
+      : '';
 
   return (
     <Container fluid>
@@ -74,7 +93,7 @@ const AppLayout: React.FC = () => {
           !filtersContext.openSearch && (
             <Button
               onClick={() => {
-                openSearch();
+                handleOpenSearch();
               }}
               aria-controls="collapse-search"
               aria-expanded={filtersContext.openSearch}
@@ -94,13 +113,13 @@ const AppLayout: React.FC = () => {
               {!strategyContext?.openStrategy ? (
                 <Button
                   onClick={() => {
-                    openStrategy();
+                    handleOpenStrategy();
                   }}
                   aria-controls="collapse-carte"
-                  aria-expanded={strategyContext.openMap}
+                  aria-expanded={openMap}
                   variant="secondary"
                   size="sm"
-                  className={`btn-display-strategy btn-list d-lg-none`}
+                  className={`btn-display-strategy btn-list d-lg-none ${isSelectedMobile} ${isSelectedStrategy}`}
                 >
                   <img src={List_bulleted} className="search-icon" />
                   Afficher la liste
@@ -108,13 +127,13 @@ const AppLayout: React.FC = () => {
               ) : (
                 <Button
                   onClick={() => {
-                    openMap();
+                    handleOpenMap();
                   }}
                   aria-controls="collapse-strategy"
-                  aria-expanded={strategyContext.openStrategy}
+                  aria-expanded={openStrategy}
                   variant="secondary"
                   size="sm"
-                  className={`btn-display-strategy d-lg-none`}
+                  className={`btn-display-strategy d-lg-none ${isSelectedMobile} ${isSelectedStrategy}`}
                 >
                   <img src={List_bulleted} className="search-icon" />
                   Afficher la carte
@@ -124,14 +143,28 @@ const AppLayout: React.FC = () => {
           )}
 
         {filtersContext.isSent &&
-          strategyContext.openStrategy !== undefined &&
-          strategyContext.openStrategy && (
+          openStrategy !== undefined &&
+          openStrategy && (
             <Col xxl="6" lg="7" md="12" sm="12" className="strategy">
-              <Collapse in={strategyContext.openStrategy}>
+              <Collapse in={openStrategy}>
                 <div id="collapse-strategy">
                   <Strategy />
                 </div>
               </Collapse>
+            </Col>
+          )}
+
+        {filtersContext.isSent &&
+          selectedStrategy != null &&
+          openStrategyDetails !== undefined &&
+          openStrategyDetails && (
+            <Col
+              md="12"
+              className={`strategy-mobile ${
+                selectedStrategies.length > 0 ? 'selected' : ''
+              }`}
+            >
+              <StrategyDetails id={selectedStrategy} />
             </Col>
           )}
         <Col

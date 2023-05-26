@@ -84,4 +84,50 @@
       font-size: 0.6875rem;
     }
   }
+
+  .strategy-mobile {
+    @include media-breakpoint-down(md) {
+      position: absolute;
+      z-index: 99;
+      background-color: #fff;
+      height: 13rem;
+      margin-top: 0;
+      font-size: 0.6875rem;
+      width: 95%;
+      left: 50%;
+      bottom: 1%;
+      transform: translateX(-50%);
+      border-radius: 0.625rem;
+      overflow: hidden;
+
+      &.selected {
+        height: 16.5rem;
+      }
+
+      .item-strategy {
+        border: none;
+      }
+
+      .strategy-row {
+        position: relative;
+        height: 100%;
+      }
+
+      .strategy-close {
+        position: absolute;
+        top: 5px;
+        right: 0;
+        width: 100%;
+        float: right;
+        justify-content: end;
+        display: flex;
+      }
+    }
+  }
+}
+
+.modal-content {
+  @include media-breakpoint-down(md) {
+    padding: 1rem !important;
+  }   
 }
