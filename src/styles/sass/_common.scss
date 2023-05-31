@@ -7,11 +7,25 @@
 .hide {
   display: none;
 }
+.row {
+  @include media-breakpoint-down(sm) {
+  --bs-gutter-x: 0;
+  }
+}
 .indicator-text {
   @include format-text($font-family-inter, 0.8125rem, 0.6875rem, $black-rak);
 
   @include media-breakpoint-down(md) {
     @include format-text($font-family-inter, 0.625rem, 0.6875rem, $black-rak);
+  }
+  @include media-breakpoint-down(sm) {
+    @include format-text($font-family-inter, 0.6rem, 0.6rem, $black-rak);
+  }
+}
+
+.fst-italic {
+  @include media-breakpoint-down(sm) {
+    @include format-text($font-family-inter, 0.62rem, 0.6rem, $black-rak);
   }
 }
 

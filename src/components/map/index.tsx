@@ -45,7 +45,7 @@ export const Map: React.FC = () => {
         zoom={zoom}
         scrollWheelZoom={false}
         minZoom={7}
-        maxZoom={22}
+        maxZoom={30}
         zoomControl={false}
         dragging={true}
       >
