@@ -37,6 +37,6 @@ export enum ConnectionMessageTypes {
   PIQUAGE = 'PIQUAGE',
 }
 export enum EneryTypeLabels {
-  RENEWABLE = 'Renouvlable',
-  NON_RENEWABLE = 'Non renouvlable',
+  RENEWABLE = 'Renouvelable',
+  NON_RENEWABLE = 'Non renouvelable',
 }
