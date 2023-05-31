@@ -2,6 +2,7 @@ import { type LeafletEventHandlerFnMap } from 'leaflet';
 import React, { useEffect } from 'react';
 import { Marker, Popup, useMap } from 'react-leaflet';
 import { useDeviceType } from './useDeviceType';
+import styled from 'styled-components';
 
 interface CustomMarkerProps {
   children: React.ReactNode;
@@ -10,6 +11,14 @@ interface CustomMarkerProps {
   icon: any;
   eventHandlers?: LeafletEventHandlerFnMap;
 }
+
+const StyledPopup = styled(Popup)`
+  .leaflet-popup-content-wrapper {
+    .leaflet-popup-content {
+      margin: 0.3125rem 0.625rem;
+    }
+  }
+`;
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({
   lng,
@@ -32,7 +41,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
       draggable={true}
       eventHandlers={eventHandlers}
     >
-      {isDesktop && <Popup>{children}</Popup>}
+      {isDesktop && <StyledPopup closeButton={false}>{children}</StyledPopup>}
     </Marker>
   );
 };
