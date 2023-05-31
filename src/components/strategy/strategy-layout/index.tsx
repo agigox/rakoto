@@ -68,13 +68,7 @@ const StrategyLayout: React.FC = (): JSX.Element => {
       </Col>
       <Col className="col-sm-12 col-md-12 col-12 flex-item-2">
         {data.map((strategy, index) => {
-          return (
-            <StrategyItem
-              key={strategy.id}
-              strategy={strategy}
-              isLast={data.length === index + 1}
-            />
-          );
+          return <StrategyItem key={strategy.id} strategy={strategy} />;
         })}
       </Col>
       <Col className="flex-item-3">

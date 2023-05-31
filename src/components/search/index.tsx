@@ -210,7 +210,7 @@ const Search: React.FC = () => {
                 value={filtersContext.power}
               />
             </InputGroup>
-            <strong className={`power-icon`}>MW</strong>
+            <span className={`power-icon`}>MW</span>
           </div>
         </Col>
         <Col

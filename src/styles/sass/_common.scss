@@ -19,6 +19,17 @@
   margin: 0 1.1875rem 0 1.1875rem;
   padding-left: 0.625rem;
   padding-right: 0.625rem;
+  border-bottom: 3px solid var(--rak-rgba-blackMana);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover,
+  &.active {
+    background-color: var(--rak-wintersDay);
+    opacity: 1;
+  }
 
   @include media-breakpoint-down(sm) {
     margin: 0 0.5rem;
@@ -28,12 +39,11 @@
 }
 
 .strategy-row {
-  .flex-item-1, .flex-item-2{
+  .flex-item-1,
+  .flex-item-2 {
     @include media-breakpoint-down(md) {
-      
     }
   }
-  
 }
 
 .collapse:not(.show) {

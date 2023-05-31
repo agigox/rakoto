@@ -1,13 +1,16 @@
 import { type LatLngExpression } from 'leaflet';
-import React from 'react';
-import { FeatureGroup, Polyline } from 'react-leaflet';
+import React, { useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FeatureGroup, Polyline, Tooltip } from 'react-leaflet';
 import styled from 'styled-components';
+import { useDeviceType } from 'components/shared/useDeviceType';
 
 interface CustomPolylineProps {
   positions: LatLngExpression[] | LatLngExpression[][];
   children: React.ReactNode;
   isActive: boolean;
   power: number;
+  label: string;
 }
 interface CustomPolylineStyleCSSProps {
   power: number;
@@ -28,15 +31,41 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
   positions,
   children,
   power,
+  label,
 }) => {
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const handleMouseOver = (): void => {
+    setTooltipVisible(true);
+  };
+
+  const handleMouseOut = (): void => {
+    setTooltipVisible(false);
+  };
+
+  const { isDesktop } = useDeviceType();
+
   return (
     <FeatureGroup>
       <CustomPolylineStyle
-        pathOptions={{ dashArray: isActive ? '0' : '12' }}
+        pathOptions={{ opacity: isActive ? 1 : 0.4 }}
         positions={positions}
-        weight={5}
+        weight={4}
         power={power}
+        eventHandlers={{
+          mouseover: handleMouseOver,
+          mouseout: handleMouseOut,
+        }}
       >
+        {isDesktop && tooltipVisible && (
+          <Tooltip direction="center" permanent>
+            <Row className="flex-column">
+              <Col className="blue-text-rak text-center">{label}</Col>
+              <Col className="fw-bold text-center">
+                {`(${power / 1000}KV / LS)`}{' '}
+              </Col>
+            </Row>
+          </Tooltip>
+        )}
         {children}
       </CustomPolylineStyle>
     </FeatureGroup>

@@ -64,6 +64,7 @@ export const CustomPolygon: React.FC = () => {
             key={id}
             isActive={selectedStrategies.includes(id)}
             power={substation}
+            label={label}
           >
             <CustomMarker
               lng={lng}
@@ -85,7 +86,6 @@ export const CustomPolygon: React.FC = () => {
                       selectedStrategy: id,
                       openStrategyDetails: true,
                     });
-                    console.log('marker clicked', id);
                   }
                 },
               }}
