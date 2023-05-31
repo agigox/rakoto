@@ -11,6 +11,7 @@ interface CustomPolylineProps {
   isActive: boolean;
   power: number;
   label: string;
+  id: number;
 }
 interface CustomPolylineStyleCSSProps {
   power: number;
@@ -32,6 +33,7 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
   children,
   power,
   label,
+  id,
 }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const handleMouseOver = (): void => {
@@ -57,9 +59,11 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
         }}
       >
         {isDesktop && tooltipVisible && (
-          <Tooltip direction="center" permanent>
+          <Tooltip direction="right" opacity={1} permanent>
             <Row className="flex-column">
-              <Col className="blue-text-rak text-center">{label}</Col>
+              <Col className="blue-text-rak text-center">
+                {label} ({id})
+              </Col>
               <Col className="fw-bold text-center">
                 {`(${power / 1000}KV / LS)`}{' '}
               </Col>
