@@ -126,19 +126,11 @@ const Search: React.FC = () => {
   const { strategyContext, setStrategyContext } =
     useContext<StrategyContextType>(StrategyContext);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const powerValue = parseInt(e.target.value);
-    if (powerValue === 0) {
-      setFiltersForm({
-        clientType: '',
-        power: 0,
-        isSent: false,
-      });
-    } else {
-      setFiltersContext({
-        ...filtersContext,
-        power: powerValue,
-      });
-    }
+    const powerValue = Number(e.target.value);
+    setFiltersContext({
+      ...filtersContext,
+      power: powerValue,
+    });
   };
   const setFiltersForm = (filters: FiltersFormType): void => {
     setFiltersContext({ ...filtersContext, ...filters });
@@ -207,7 +199,7 @@ const Search: React.FC = () => {
                 bsPrefix="form-control-rak"
                 className={`power-input`}
                 onChange={handleChange}
-                value={filtersContext.power}
+                value={Number(filtersContext.power).toString()}
               />
             </InputGroup>
             <span className={`power-icon`}>MW</span>
