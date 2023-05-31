@@ -1,9 +1,9 @@
-import { type LatLngExpression } from 'leaflet';
-import React, { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { FeatureGroup, Polyline, Tooltip } from 'react-leaflet';
+import { type LeafletMouseEvent, type LatLngExpression } from 'leaflet';
+import React from 'react';
+import { FeatureGroup, Polyline, Popup } from 'react-leaflet';
 import styled from 'styled-components';
 import { useDeviceType } from 'components/shared/useDeviceType';
+import { PointPopup } from './PointPopup';
 
 interface CustomPolylineProps {
   positions: LatLngExpression[] | LatLngExpression[][];
@@ -16,6 +16,16 @@ interface CustomPolylineProps {
 interface CustomPolylineStyleCSSProps {
   power: number;
 }
+
+const StyledPopup = styled(Popup)`
+  .leaflet-popup-content-wrapper {
+    border-radius: 0.1875rem;
+    .leaflet-popup-content {
+      margin: 0.3125rem 0.625rem;
+    }
+  }
+`;
+
 const CustomPolylineStyle = styled(Polyline)`
   stroke: ${(props: CustomPolylineStyleCSSProps) => {
     if (props.power >= 6300 && props.power <= 9000) {
@@ -35,15 +45,6 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
   label,
   id,
 }) => {
-  const [tooltipVisible, setTooltipVisible] = useState(false);
-  const handleMouseOver = (): void => {
-    setTooltipVisible(true);
-  };
-
-  const handleMouseOut = (): void => {
-    setTooltipVisible(false);
-  };
-
   const { isDesktop } = useDeviceType();
 
   return (
@@ -54,21 +55,18 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
         weight={4}
         power={power}
         eventHandlers={{
-          mouseover: handleMouseOver,
-          mouseout: handleMouseOut,
+          mouseover: (event: LeafletMouseEvent) => {
+            event.target.openPopup();
+          },
+          mouseout: (event: LeafletMouseEvent) => {
+            event.target.closePopup();
+          },
         }}
       >
-        {isDesktop && tooltipVisible && (
-          <Tooltip direction="right" opacity={1} permanent>
-            <Row className="flex-column">
-              <Col className="blue-text-rak text-center">
-                {label} ({id})
-              </Col>
-              <Col className="fw-bold text-center">
-                {`(${power / 1000}KV / LS)`}{' '}
-              </Col>
-            </Row>
-          </Tooltip>
+        {isDesktop && (
+          <StyledPopup closeButton={false}>
+            <PointPopup label={label} power={power} id={id} />
+          </StyledPopup>
         )}
         {children}
       </CustomPolylineStyle>
