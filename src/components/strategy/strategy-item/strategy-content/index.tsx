@@ -1,6 +1,6 @@
 import StrategyContext from 'context/StrategyContext';
 import { type IStrategy } from 'models/Strategy';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { type StrategyContextType } from 'types';
 import StrategyDescription from './StrategyDescription';
@@ -20,6 +20,9 @@ const addOrRemoveNumber = (arr: number[], num: number): number[] => {
   }
 
   return arr;
+};
+const isChecked = (arr: number[], num: number): boolean => {
+  return arr.includes(num);
 };
 const StyledRow = styled(Row)`
   cursor: pointer;
@@ -44,37 +47,32 @@ const StrategyContent: React.FC<StrategyContentProps> = ({
 }) => {
   const { strategyContext, setStrategyContext } =
     useContext<StrategyContextType>(StrategyContext);
-  const [checked, setChecked] = useState(true);
+  const { selectedStrategies } = strategyContext;
+
   const { id, point, connectionMessage, parameters, indicators } = strategy;
   const { isMobile, isTablet } = useDeviceType();
 
-  const [selectedStrategyIndex, setSelectedStrategyIndex] = useState<number>(0);
   const onSelectStretegy = (elem: number, isActive: boolean): void => {
-    setSelectedStrategyIndex(elem);
     handleIsActive(isActive);
     setStrategyContext({
       ...strategyContext,
-      selectedStrategies: addOrRemoveNumber(
-        strategyContext.selectedStrategies,
-        elem,
-      ),
+      selectedStrategies: addOrRemoveNumber(selectedStrategies, elem),
     });
-    setChecked(!checked);
   };
   return (
     <StyledRow
       onClick={() => {
-        onSelectStretegy(id, !checked && selectedStrategyIndex === id);
+        onSelectStretegy(id, isChecked(selectedStrategies, id));
       }}
     >
       <Col className="checkbox-col-rak">
         <Form.Check
-          checked={!checked && selectedStrategyIndex === id}
+          checked={isChecked(selectedStrategies, id)}
           as="input"
           value={strategy.id}
           bsSwitchPrefix="form-check-input-rak"
           onChange={() => {
-            onSelectStretegy(id, !checked && selectedStrategyIndex === id);
+            onSelectStretegy(id, isChecked(selectedStrategies, id));
           }}
           type="checkbox"
         />
