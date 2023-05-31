@@ -9,7 +9,7 @@ import StrategySearch from './StrategySearch';
 import StrategyItem from '../strategy-item';
 
 interface RowCSSProps {
-  isSent: boolean;
+  sent: boolean;
 }
 
 const StyledRow = styled(Row)`
@@ -27,7 +27,7 @@ const StyledRow = styled(Row)`
   }
   height: calc(100vh - 7.4rem);
   display: ${(props: RowCSSProps) => {
-    return props.isSent ? 'flex' : 'none';
+    return props.sent ? 'flex' : 'none';
   }};
 `;
 const StrategyLayout: React.FC = (): JSX.Element => {
@@ -62,7 +62,7 @@ const StrategyLayout: React.FC = (): JSX.Element => {
     });
   };
   return (
-    <StyledRow isSent={isSent ? 1 : 0} className="flex-row strategy-row">
+    <StyledRow sent={isSent ? 1 : 0} className="flex-row strategy-row">
       <Col className="col-sm-12 col-md-12 col-12 flex-item-1">
         <StrategySearch length={data.length} onHideList={onHideList} />
       </Col>
