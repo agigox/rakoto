@@ -14,7 +14,7 @@ export const PointPopup: React.FC<PointPopupProps> = ({
   id,
 }: PointPopupProps): React.ReactElement => {
   return (
-    <Row className="flex-column">
+    <Row className="flex-column text-center">
       <Col className="blue-text-rak">
         {label} ({id})
       </Col>

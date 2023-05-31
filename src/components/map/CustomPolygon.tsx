@@ -62,6 +62,7 @@ export const CustomPolygon: React.FC = () => {
           <CustomPolyline
             positions={polylineCoords}
             key={id}
+            id={id}
             isActive={selectedStrategies.includes(id)}
             power={substation}
             label={label}
@@ -78,6 +79,9 @@ export const CustomPolygon: React.FC = () => {
               eventHandlers={{
                 mouseover: (event: LeafletMouseEvent) => {
                   event.target.openPopup();
+                },
+                mouseout: (event: LeafletMouseEvent) => {
+                  event.target.closePopup();
                 },
                 click: (e) => {
                   if (isMobile || isTablet) {

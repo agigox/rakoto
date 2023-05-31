@@ -14,6 +14,7 @@ interface CustomMarkerProps {
 
 const StyledPopup = styled(Popup)`
   .leaflet-popup-content-wrapper {
+    border-radius: 0.1875rem;
     .leaflet-popup-content {
       margin: 0.3125rem 0.625rem;
     }
