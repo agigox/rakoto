@@ -2,9 +2,10 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 interface PointPopupProps {
   label: string;
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   id: number;
+  power?: number;
 }
 
 export const PointPopup: React.FC<PointPopupProps> = ({
@@ -12,15 +13,20 @@ export const PointPopup: React.FC<PointPopupProps> = ({
   lng,
   label,
   id,
+  power,
 }: PointPopupProps): React.ReactElement => {
   return (
-    <Row className="flex-column">
+    <Row className="flex-column text-center">
       <Col className="blue-text-rak">
         {label} ({id})
       </Col>
-      <Col className="fw-bold">
-        {`${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}`}{' '}
-      </Col>
+      {power != null ? (
+        <Col className="fw-bold">{`(${power / 1000}KV / LS)`}</Col>
+      ) : (
+        <Col className="fw-bold">
+          {`${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}`}{' '}
+        </Col>
+      )}
     </Row>
   );
 };
