@@ -271,7 +271,7 @@ const AutocompleteInput: React.FC = () => {
         <>
           {isValid ? (
             <Form.Text className="text-muted error_message">
-              {` L'adresse sassie ne correspond pas`}
+              {` L'adresse saisie ne correspond pas`}
             </Form.Text>
           ) : null}
         </>
