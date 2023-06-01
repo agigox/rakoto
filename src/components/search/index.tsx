@@ -231,11 +231,6 @@ const Search: React.FC = () => {
             générer les stratégies
           </Button>
         </Col>
-        {/* <Col lg={5} md={12} sm={12}>
-          <Row>
-            
-          </Row>
-        </Col> */}
       </Row>
     </StyledContainer>
   );

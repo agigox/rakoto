@@ -51,7 +51,7 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
       <CustomPolylineStyle
         pathOptions={{ opacity: isActive ? 1 : 0.4 }}
         positions={positions}
-        weight={4}
+        weight={5}
         power={power}
         eventHandlers={{
           mouseover: handleMouseOver,
@@ -59,7 +59,7 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
         }}
       >
         {isDesktop && tooltipVisible && (
-          <Tooltip direction="top" opacity={1} permanent>
+          <Tooltip opacity={1} permanent direction="top">
             <PointPopup label={label} power={power} id={id} />
           </Tooltip>
         )}
