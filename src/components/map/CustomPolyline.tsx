@@ -56,15 +56,18 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
         eventHandlers={{
           mouseover: handleMouseOver,
           mouseout: handleMouseOut,
+          click: () => {
+            console.log('click');
+          },
         }}
       >
-        {isDesktop && tooltipVisible && (
-          <Tooltip opacity={1} permanent direction="top">
-            <PointPopup label={label} power={power} id={id} />
-          </Tooltip>
-        )}
         {children}
       </CustomPolylineStyle>
+      {isDesktop && tooltipVisible && (
+        <Tooltip opacity={1} permanent direction="top" offset={[0, 0]}>
+          <PointPopup label={label} power={power} id={id} />
+        </Tooltip>
+      )}
     </FeatureGroup>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { useMap } from 'react-leaflet';
+import React, { useContext, useEffect, useState } from 'react';
+import { Tooltip, useMap } from 'react-leaflet';
 import { type FiltersContextType, type StrategyContextType } from 'types';
 import StrategyContext from 'context/StrategyContext';
 import CustomPolyline from './CustomPolyline';
-import L, { type LeafletMouseEvent } from 'leaflet';
+import L from 'leaflet';
 import { type IStrategy } from 'models/Strategy';
 import FiltersContext from 'context/FiltersContext';
 import CustomMarker from 'components/shared/CustomMarker';
@@ -48,6 +48,16 @@ export const CustomPolygon: React.FC = () => {
           point: { substation },
         } = strategy;
 
+        const { isDesktop } = useDeviceType();
+        const [tooltipVisible, setTooltipVisible] = useState(false);
+        const handleMouseOver = (): void => {
+          setTooltipVisible(true);
+        };
+
+        const handleMouseOut = (): void => {
+          setTooltipVisible(false);
+        };
+
         const IconMarkerHtml = (id: number): any => {
           return `<div class="svg-icon-marker">
           <span class="number-strategy-line">${id}</span>
@@ -57,6 +67,16 @@ export const CustomPolygon: React.FC = () => {
           <path d="M12 24V42" stroke="black" stroke-width="2" stroke-linejoin="round"/>
           </svg> </div>`;
         };
+
+        // Create a custom DivIcon with event listeners
+        const iconOptions: L.DivIconOptions = {
+          className: 'custom-div-icon-marker',
+          html: IconMarkerHtml(id),
+          iconAnchor: [26, 40],
+          iconSize: [30, 60],
+        };
+
+        const customDivIcon = L.divIcon(iconOptions);
 
         return (
           <CustomPolyline
@@ -70,19 +90,10 @@ export const CustomPolygon: React.FC = () => {
             <CustomMarker
               lng={lng}
               lat={lat}
-              icon={L.divIcon({
-                className: 'custom-div-icon-marker',
-                html: IconMarkerHtml(id),
-                iconAnchor: [26, 40],
-                iconSize: [30, 60],
-              })}
+              icon={customDivIcon}
               eventHandlers={{
-                mouseover: (event: LeafletMouseEvent) => {
-                  event.target.openPopup();
-                },
-                mouseout: (event: LeafletMouseEvent) => {
-                  event.target.closePopup();
-                },
+                mouseover: handleMouseOver,
+                mouseout: handleMouseOut,
                 click: (e) => {
                   if (isMobile || isTablet) {
                     setStrategyContext({
@@ -91,10 +102,20 @@ export const CustomPolygon: React.FC = () => {
                       openStrategyDetails: true,
                     });
                   }
+                  console.log('click');
                 },
               }}
             >
-              <PointPopup label={label} lat={lat} lng={lng} id={id} />
+              {isDesktop && tooltipVisible && (
+                <Tooltip
+                  opacity={1}
+                  permanent
+                  direction="top"
+                  offset={[-1, -40]}
+                >
+                  <PointPopup label={label} lat={lat} lng={lng} id={id} />
+                </Tooltip>
+              )}
             </CustomMarker>
           </CustomPolyline>
         );
