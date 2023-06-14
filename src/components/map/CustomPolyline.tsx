@@ -1,6 +1,9 @@
+import type L from 'leaflet';
 import { type LatLngExpression } from 'leaflet';
-import React, { useState } from 'react';
-import { FeatureGroup, Polyline, Tooltip } from 'react-leaflet';
+import React from 'react';
+import { Polyline, Popup } from 'react-leaflet';
+
+import 'leaflet/dist/leaflet.css';
 import styled from 'styled-components';
 import { useDeviceType } from 'components/shared/useDeviceType';
 import { PointPopup } from './PointPopup';
@@ -12,6 +15,8 @@ interface CustomPolylineProps {
   power: number;
   label: string;
   id: number;
+  lat: number;
+  lng: number;
 }
 interface CustomPolylineStyleCSSProps {
   power: number;
@@ -28,47 +33,61 @@ const CustomPolylineStyle = styled(Polyline)`
     }
   }};
 `;
+
+const StyledPopup = styled(Popup)`
+  .leaflet-popup-content-wrapper {
+    border-radius: 0.1875rem;
+    .leaflet-popup-content {
+      margin: 0.3125rem 0.625rem;
+    }
+  }
+`;
+
 const CustomPolyline: React.FC<CustomPolylineProps> = ({
   isActive,
   positions,
-  children,
   power,
   label,
   id,
+  lat,
+  lng,
+  children,
 }) => {
+  const polylineRef = React.useRef<L.Polyline | null>(null);
   const { isDesktop } = useDeviceType();
-  const [tooltipVisible, setTooltipVisible] = useState(false);
-  const handleMouseOver = (): void => {
-    setTooltipVisible(true);
-  };
-
-  const handleMouseOut = (): void => {
-    setTooltipVisible(false);
-  };
 
   return (
-    <FeatureGroup>
+    <>
       <CustomPolylineStyle
-        pathOptions={{ opacity: isActive ? 1 : 0.4 }}
+        pathOptions={{
+          opacity: isActive ? 1 : 0.4,
+        }}
         positions={positions}
-        weight={5}
+        weight={8}
         power={power}
         eventHandlers={{
-          mouseover: handleMouseOver,
-          mouseout: handleMouseOut,
+          mouseover: (e: L.LeafletMouseEvent) => e.target.openPopup(),
+          mouseout: (e: L.LeafletMouseEvent) => e.target.closePopup(),
           click: () => {
-            console.log('click');
+            console.log('cliked');
           },
         }}
+        ref={polylineRef}
       >
         {children}
+        {isDesktop && (
+          <StyledPopup closeButton={false}>
+            <PointPopup
+              label={label}
+              power={power}
+              lat={lat}
+              lng={lng}
+              id={id}
+            />
+          </StyledPopup>
+        )}
       </CustomPolylineStyle>
-      {isDesktop && tooltipVisible && (
-        <Tooltip opacity={1} permanent direction="top" offset={[0, 0]}>
-          <PointPopup label={label} power={power} id={id} />
-        </Tooltip>
-      )}
-    </FeatureGroup>
+    </>
   );
 };
 
