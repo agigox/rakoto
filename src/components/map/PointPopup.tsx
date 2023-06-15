@@ -1,10 +1,10 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 interface PointPopupProps {
-  label: string;
+  label?: string;
   lat?: number;
   lng?: number;
-  id: number;
+  id?: number;
   power?: number;
 }
 
