@@ -56,10 +56,10 @@ export const CustomPolygon: React.FC = () => {
             >
               <CustomMarker
                 label={label}
-                key={id}
                 lng={lng}
                 lat={lat}
                 id={id}
+                position={false}
               />
             </CustomPolyline>
           </FeatureGroup>
