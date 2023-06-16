@@ -13,8 +13,8 @@ export const useDeviceType = (): useDeviceProps => {
   useEffect(() => {
     const handleResize = (): void => {
       setIsMobile(window.innerWidth < 576); // Adjust the breakpoint as needed
-      setIsTablet(window.innerWidth < 768);
-      setIsDesktop(window.innerWidth >= 768);
+      setIsTablet(window.innerWidth < 992);
+      setIsDesktop(window.innerWidth >= 992);
     };
 
     handleResize(); // Check initial width on component mount

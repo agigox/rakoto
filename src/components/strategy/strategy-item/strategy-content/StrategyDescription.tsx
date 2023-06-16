@@ -45,7 +45,7 @@ const StrategyDescription: React.FC<StrategyDescriptionProps> = ({
       <Col md={{ span: '12' }} xs={{ span: '12' }}>
         <StrategyTitle id={id} />
       </Col>
-      <Col md={{ span: '4' }} xs={{ span: '12' }}>
+      <Col lg={{ span: '4' }} md={{ span: '8' }} xs={{ span: '12' }}>
         <Row>
           <Col md={{ span: '12' }} className="flex-item">
             {StrategyTypeLabels[pointType as keyof typeof StrategyTypeLabels]}{' '}
