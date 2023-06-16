@@ -29,8 +29,6 @@ const AppLayout: React.FC = () => {
   const { isMobile, isTablet } = useDeviceType();
   const isDesktop = !isMobile && !isTablet;
 
-  console.log(openStrategy);
-
   useEffect(() => {
     // Check is Desktop: to display Carte & Strategy
     if (isDesktop) {
