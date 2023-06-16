@@ -36,8 +36,26 @@ const StyledRow = styled(Row)`
   .description-col-rak {
     width: calc(100% - 2.1875rem);
 
+    @media (max-width: 992px) {
+      width: calc(40% - 2.1875rem);
+    }
+
+    @media (max-width: 769px) {
+      width: calc(32% - 2.1875rem);
+    }
+
     @media (max-width: 575.98px) {
+      width: calc(80% - 2.1875rem);
       font-size: 0.725rem;
+    }
+  }
+  .parameters {
+    @media (max-width: 992px) {
+      padding-top: 1.5rem;
+    }
+
+    @media (max-width: 575.98px) {
+      padding-top: 0.2rem;
     }
   }
 `;
@@ -87,7 +105,7 @@ const StrategyContent: React.FC<StrategyContentProps> = ({
         />
       </Col>
       {(isMobile || isTablet) && (
-        <Col md="8" xs="12">
+        <Col className="parameters" md="7" sm="8" xs="12">
           <Row>
             <Col md="12" xs="12">
               <StrategyParameters parameters={parameters} />

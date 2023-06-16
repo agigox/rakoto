@@ -105,11 +105,11 @@
   }
 
   &.btn-list {
-    bottom: 2rem;
+    bottom: 4rem;
   }
 
   @include media-breakpoint-only(md) {
-    right: 9rem;
+    right: 1rem;
   }
 
   :hover,

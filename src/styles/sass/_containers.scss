@@ -7,6 +7,10 @@
   --bs-gutter-x: 0;
 }
 
+.row {
+  --bs-gutter-x: 0;
+}
+
 // sticky-header
 .sticky-header {
   position: fixed;
@@ -74,14 +78,21 @@
 
   .strategy {
     margin-top: 7.2rem;
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
       position: absolute;
       z-index: 99;
       background-color: #fff;
       height: calc(100vh - 7.4rem);
-      top: 7.4rem;
+      top: auto;
       margin-top: 0;
       font-size: 0.6875rem;
+      width: 80%;
+      transform: translate(-50%, 0);
+      left: 50%;
+      bottom: 0;
+    }
+    @include media-breakpoint-down(md) {
+      width: 90%;
     }
   }
 
