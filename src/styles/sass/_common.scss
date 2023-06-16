@@ -78,3 +78,10 @@
 .leaflet-control-attribution.leaflet-control {
   display: none;
 }
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0.1875rem !important;
+    .leaflet-popup-content {
+      margin: 0.3125rem 0.625rem !important;
+    }
+  }

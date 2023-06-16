@@ -17,12 +17,13 @@ export const PointPopup: React.FC<PointPopupProps> = ({
 }: PointPopupProps): React.ReactElement => {
   return (
     <Row className="flex-column text-center">
-      <Col className="blue-text-rak">
-        {label} ({id})
+      <Col className={`${id != null ? 'blue-text-rak' : 'fw-bold'}`}>
+        {label} {id != null && <span>{`(${id})`}</span>}
       </Col>
-      {power != null ? (
+      {lat != null && lng != null && power != null && (
         <Col className="fw-bold">{`(${power / 1000}KV / LS)`}</Col>
-      ) : (
+      )}
+      {lat != null && lng != null && power == null && (
         <Col className="fw-bold">
           {`${Number(lat).toFixed(5)}, ${Number(lng).toFixed(5)}`}{' '}
         </Col>

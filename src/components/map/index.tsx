@@ -8,7 +8,7 @@ import { type StrategyContextType, type FiltersContextType } from 'types';
 import StrategyContext from 'context/StrategyContext';
 import CustomPolygon from './CustomPolygon';
 import { Collapse } from 'react-bootstrap';
-import AddressMarker from './AddressMarker';
+import CustomMarker from 'components/shared/CustomMarker';
 
 const StyledDiv = styled.div`
   .leaflet-container {
@@ -48,18 +48,20 @@ export const Map: React.FC = () => {
               <div id="collapse-carte">
                 {length > 0 ? (
                   <>
-                    <AddressMarker
+                    <CustomMarker
                       lng={Number(filtersContext.coordinates?.lng)}
                       lat={Number(filtersContext.coordinates?.lat)}
                       label={filtersContext.coordinates?.label}
+                      position={true}
                     />
                     <CustomPolygon />
                   </>
                 ) : (
-                  <AddressMarker
+                  <CustomMarker
                     lng={Number(filtersContext.coordinates?.lng)}
                     lat={Number(filtersContext.coordinates?.lat)}
                     label={filtersContext.coordinates?.label}
+                    position={true}
                   />
                 )}
               </div>

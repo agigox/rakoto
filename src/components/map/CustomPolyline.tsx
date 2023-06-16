@@ -34,15 +34,6 @@ const CustomPolylineStyle = styled(Polyline)`
   }};
 `;
 
-const StyledPopup = styled(Popup)`
-  .leaflet-popup-content-wrapper {
-    border-radius: 0.1875rem;
-    .leaflet-popup-content {
-      margin: 0.3125rem 0.625rem;
-    }
-  }
-`;
-
 const CustomPolyline: React.FC<CustomPolylineProps> = ({
   isActive,
   positions,
@@ -76,7 +67,7 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
       >
         {children}
         {isDesktop && (
-          <StyledPopup closeButton={false}>
+          <Popup closeButton={false}>
             <PointPopup
               label={label}
               power={power}
@@ -84,7 +75,7 @@ const CustomPolyline: React.FC<CustomPolylineProps> = ({
               lng={lng}
               id={id}
             />
-          </StyledPopup>
+          </Popup>
         )}
       </CustomPolylineStyle>
     </>

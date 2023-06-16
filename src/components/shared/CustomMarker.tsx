@@ -1,34 +1,27 @@
 import React, { useContext, useEffect } from 'react';
-import L from 'leaflet';
+import L, { type PointExpression } from 'leaflet';
 import { Marker, Popup, useMap } from 'react-leaflet';
 import { useDeviceType } from './useDeviceType';
 import { type StrategyContextType } from 'types';
 import StrategyContext from 'context/StrategyContext';
 import { PointPopup } from 'components/map/PointPopup';
-import styled from 'styled-components';
+import ImgMarker from 'images/marker.svg';
 
 interface CustomMarkerProps {
   children?: React.ReactNode;
   lat: number;
   lng: number;
-  id: number;
-  label: string;
+  id?: number;
+  label?: string;
+  position?: boolean;
 }
-
-const StyledPopup = styled(Popup)`
-  .leaflet-popup-content-wrapper {
-    border-radius: 0.1875rem;
-    .leaflet-popup-content {
-      margin: 0.3125rem 0.625rem;
-    }
-  }
-`;
 
 const CustomMarker: React.FC<CustomMarkerProps> = ({
   lng,
   lat,
   id,
   label,
+  position,
 }: CustomMarkerProps): React.ReactElement => {
   const { strategyContext, setStrategyContext } =
     useContext<StrategyContextType>(StrategyContext);
@@ -39,6 +32,13 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   }, [lat, lng]);
 
   const { isMobile, isTablet, isDesktop } = useDeviceType();
+
+  const IconMarker = new L.Icon({
+    iconUrl: ImgMarker,
+    iconAnchor: [12, 46],
+    popupAnchor: [10, -44],
+    iconSize: [25, 55],
+  });
 
   const IconMarkerHtml = (id: number): any => {
     return `<div class="svg-icon-marker">
@@ -53,12 +53,22 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
   // Create a custom DivIcon with event listeners
   const iconOptions: L.DivIconOptions = {
     className: 'custom-div-icon-marker',
-    html: IconMarkerHtml(id),
+    html: id != null && IconMarkerHtml(id),
     iconAnchor: [26, 40],
     iconSize: [30, 60],
   };
 
-  const customDivIcon = L.divIcon(iconOptions);
+  const customDivIcon = position === true ? IconMarker : L.divIcon(iconOptions);
+  const popupOptions: PointExpression =
+    position === true ? [-6, 18] : [-1, -30];
+
+  const contentPopup = (): JSX.Element => {
+    return position === true ? (
+      <PointPopup label={label} />
+    ) : (
+      <PointPopup label={label} lat={lat} lng={lng} id={id} />
+    );
+  };
 
   return (
     <Marker
@@ -80,9 +90,9 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({
       }}
     >
       {isDesktop && (
-        <StyledPopup closeButton={false} offset={[-1, -30]}>
-          <PointPopup label={label} lat={lat} lng={lng} id={id} />
-        </StyledPopup>
+        <Popup closeButton={false} offset={popupOptions}>
+          {contentPopup()}
+        </Popup>
       )}
     </Marker>
   );
